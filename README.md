@@ -16,4 +16,31 @@ Add Dependencies
  -LogBack Dependencies- We will be logging the output of the reactor in order to understand the flow of data.
 
  
+Subscribe- Use the subscribe mthod to emmit the elements.
+Logging the sequence
+    1. onSubscribe() – This is called when we subscribe to our stream.
+    2. request(unbounded) – When we call subscribe, behind the scenes we’re
+    creating a Subscription. This subscription requests elements from the
+    stream. In this case, it defaults to unbounded, meaning it requests every
+    single element available.
+    3. onNext() – This is called on every single element.
+    4. onComplete() – This is called last, after receiving the last element. There’s
+    actually an onError() as well, which would be called if there’s an exception,
+    but in this case, there isn’t.
+    This is the flow laid out in the Subscriber interface as part of the Reactive
+    Streams Specification. In reality, this is what’s been instantiated behind the
+    scenes in our call to onSubscribe(). 
+
+   COMPARISON TO JAVA8 STREAMS
+   The core difference is that Reactive is a push model, whereas the Java 8
+   Streams are a pull model. In a reactive approach, events are pushed to the
+   subscribers as they come in.
+
+BACKPRESSURE
+Backpressure is when a downstream can tell an upstream to send it less
+data in order to prevent it from being overwhelmed.
+
+In our example, the subscriber is telling the producer to push every single element at once. This
+could end up becoming overwhelming for the subscriber, consuming all of
+its resources.
 
