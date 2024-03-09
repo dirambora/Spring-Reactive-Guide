@@ -3,11 +3,13 @@ package org.example;
 import org.assertj.core.api.Assertions;
 import org.reactivestreams.Subscriber;
 import org.reactivestreams.Subscription;
+import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static reactor.core.publisher.Signal.subscribe;
 
@@ -74,6 +76,13 @@ public class Main {
                 "First Flux: 6, Secong Flux:0",
                 "First Flux: 8, Secong Flux:0");
 
+        //creating a connectable flux
+        ConnectableFlux<Object> publish=  Flux.create(fluxSink -> {
+                    while(true) {
+                        fluxSink.next(System.currentTimeMillis());
+                    }
+                })
+                .publish();
 
         System.out.println("Hello world!");
 
