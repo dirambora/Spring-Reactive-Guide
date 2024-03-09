@@ -44,3 +44,20 @@ In our example, the subscriber is telling the producer to push every single elem
 could end up becoming overwhelming for the subscriber, consuming all of
 its resources.
 
+### Operating on a Stream
+We can also perform operations on the data in our stream, responding to
+events as we see fit.
+
+#### Mapping Data in a Stream
+A simple operation that we can perform is applying a transformation. In this
+case, we’ll just double all the numbers in our stream:
+
+Flux.just(1, 2, 3, 4)
+ .log()
+ .map(i -> i * 2)
+ .subscribe(elements::add);
+
+ #### Combining Two Streams
+
+ We can then make things more interesting by combining another stream
+ with this one. Let’s try this by using the zip() function:
