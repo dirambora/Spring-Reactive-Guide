@@ -84,6 +84,8 @@ public class Main {
                 })
                 .publish();
 
+        publish.connect();
+
         System.out.println("Hello world!");
 
         List<String> elementss = new ArrayList<>();
