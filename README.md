@@ -1,7 +1,5 @@
 # Spring-Reactive-Guide
 
-
-
 # Reactor Core
 Reactor Core is a Java 8 library that implements the reactive programming
 model. It’s built on top of the Reactive Streams specification, which is a
@@ -61,3 +59,21 @@ Flux.just(1, 2, 3, 4)
 
  We can then make things more interesting by combining another stream
  with this one. Let’s try this by using the zip() function:
+
+### Hot Streams
+These tyoe of streams are those that are always running and can be subscribed to at any point in time, missing the start of data.
+
+
+##### Creating a Connectable Flux
+One way to create a hot stream is by converting a cold stream into one.
+n reactive programming with Project Reactor, the publish() method is used to convert a regular Flux into a ConnectableFlux. This operation effectively makes the Flux "hot", meaning it starts emitting items as soon as you call connect() on the ConnectableFlux.
+
+
+##### Concurrency
+The Parallel scheduler will cause our subscription to be run on a different 
+thread, which can be proved by looking at the logs. 
+
+
+
+
+
