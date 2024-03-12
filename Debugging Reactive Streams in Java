@@ -11,7 +11,7 @@ much information about the actual element that generated the exception.
 
 ### Activating Reactor's Global Debug Configuration
 The reactor library provides a HOOKS class that lets us configure the behaviour of flux and mono operators.
-By simply addinf the statement below, our application will instrument cthe calls to publisher's methods,
+By simply adding the statement below, our application will instrument cthe calls to publisher's methods,
 wrap the construction of the operator and captuire a strack trace.
 
 Hooks.onOperatorDebug();
@@ -31,3 +31,42 @@ Hooks.onOperatorDebug();
 Enabling operator debugging can provide valuable insights into the execution flow of reactive streams,
 including information about operators' names, stack traces, and context information. 
 This can be particularly useful for troubleshooting and understanding how reactive applications behave.
+
+### ActivatinG THE Debug Output on a Single Process
+Instrumenting and generating a stack trace in every single reactive process is costly, so we should implement the former 
+approach only in crticial cases.
+Reactor provides a way to enebal the debug mode on single crucial processes, which is less memory-consuming.
+  This is the <b> checkpoint operator <b>
+
+                  public void processFoo(Flux<Foo> flux) {
+                  
+                   // ...
+                   flux.checkpoint(“Observed error on processFoo”, true)
+                   .subscribe();
+                  }
+
+We should implement the checkpoint method towards the end of the reactive chain.
+
+#### Logging a Sequence of Elements
+Reactor publishers offer one more method thsat could potentially ome in handy in sime casdes. Calling the log method
+in our reactive chain, the application will log each element in the flow with the state that i has at that stage.
+
+                  public void processFoo(Flux<Foo> flux) {
+                            flux.map(FooNameHelper::concatFooName)
+                            .map(FooNameHelper::substringFooName)
+                            .log();
+                            .map(FooReporter::reportResult)
+                            .doOnError(error -> {
+                            logger.error(“The following error happened on processFoo
+                           method!”, error);
+                            })
+                            .subscribe();
+                  }
+
+
+
+
+
+
+
+
