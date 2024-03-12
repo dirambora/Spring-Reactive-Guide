@@ -15,13 +15,13 @@ Add Dependencies
 
  
 Subscribe- Use the subscribe mthod to emmit the elements.
-Logging the sequence
-    1. onSubscribe() – This is called when we subscribe to our stream.
+Logging the sequence<br>
+    - onSubscribe() – This is called when we subscribe to our stream.<br>
     2. request(unbounded) – When we call subscribe, behind the scenes we’re
-    creating a Subscription.
-    3. onNext() – This is called on every single element.
-    4. onComplete() – This is called last, after receiving the last element. There’s
-    5. onError() which is called if there’s an exception,
+    creating a Subscription.<br>
+    3. onNext() – This is called on every single element.<br>
+    4. onComplete() – This is called last, after receiving the last element. <br>
+    5. onError() which is called if there’s an exception.<br>
    
    
  COMPARISON TO JAVA8 STREAMS
