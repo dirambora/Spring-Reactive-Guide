@@ -18,21 +18,16 @@ Subscribe- Use the subscribe mthod to emmit the elements.
 Logging the sequence
     1. onSubscribe() – This is called when we subscribe to our stream.
     2. request(unbounded) – When we call subscribe, behind the scenes we’re
-    creating a Subscription. This subscription requests elements from the
-    stream. In this case, it defaults to unbounded, meaning it requests every
-    single element available.
+    creating a Subscription.
     3. onNext() – This is called on every single element.
     4. onComplete() – This is called last, after receiving the last element. There’s
-    actually an onError() as well, which would be called if there’s an exception,
-    but in this case, there isn’t.
-    This is the flow laid out in the Subscriber interface as part of the Reactive
-    Streams Specification. In reality, this is what’s been instantiated behind the
-    scenes in our call to onSubscribe(). 
-
-   COMPARISON TO JAVA8 STREAMS
-   The core difference is that Reactive is a push model, whereas the Java 8
-   Streams are a pull model. In a reactive approach, events are pushed to the
-   subscribers as they come in.
+    5. onError() which is called if there’s an exception,
+   
+   
+ COMPARISON TO JAVA8 STREAMS
+ The core difference is that Reactive is a push model, whereas the Java 8
+ Streams are a pull model. In a reactive approach, events are pushed to the
+ subscribers as they come in.
 
 BACKPRESSURE
 Backpressure is when a downstream can tell an upstream to send it less
@@ -66,7 +61,8 @@ These tyoe of streams are those that are always running and can be subscribed to
 
 ##### Creating a Connectable Flux
 One way to create a hot stream is by converting a cold stream into one.
-n reactive programming with Project Reactor, the publish() method is used to convert a regular Flux into a ConnectableFlux. This operation effectively makes the Flux "hot", meaning it starts emitting items as soon as you call connect() on the ConnectableFlux.
+n reactive programming with Project Reactor, the publish() method is used to convert a regular Flux into a ConnectableFlux. This operation effectively makes the Flux "hot", 
+meaning it starts emitting items as soon as you call connect() on the ConnectableFlux.
 
 
 ##### Concurrency
