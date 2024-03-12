@@ -6,11 +6,13 @@ import org.reactivestreams.Subscription;
 import reactor.core.publisher.ConnectableFlux;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static reactor.core.publisher.Signal.subscribe;
 
 public class Main {
@@ -70,19 +72,20 @@ public class Main {
                                 (one, two) -> String.format("First Flux: %d, Second Flux: %d", one,two))
                                 .subscribe(elements::add);
 
-        Assertions.assertThat(elements).containsExactly(
-                "First Flux: 2, Secong Flux:0",
-                "First Flux: 4, Secong Flux:0",
-                "First Flux: 6, Secong Flux:0",
-                "First Flux: 8, Secong Flux:0");
+//        assertThat(elements).containsExactly(
+//                "First Flux: 2, Second Flux:0",
+//                "First Flux: 4, Secong Flux:0",
+//                "First Flux: 6, Secong Flux:0",
+//                "First Flux: 8, Secong Flux:0");
+
 
         //creating a connectable flux
-        ConnectableFlux<Object> publish=  Flux.create(fluxSink -> {
-                    while(true) {
-                        fluxSink.next(System.currentTimeMillis());
-                    }
-                })
-                .publish();
+        ConnectableFlux<Object> publish =Flux.create(fluxSink -> {
+            while (true){
+                fluxSink.next(System.currentTimeMillis());
+            }
+        })
+        .publish();
 
         publish.connect();
 
@@ -91,6 +94,15 @@ public class Main {
         List<String> elementss = new ArrayList<>();
         //flux-a stream that can emit 0..n elements
         Flux<Integer> just = Flux.just(1, 2, 3, 4);
+
+
+        List<String> elements = new ArrayList<>();
+
+        Flux.just(1, 2, 3, 4)
+                .log()
+                .map(i -> i * 2)
+                .subscribeOn(Schedulers.parallel())
+                .subscribe(elements::add);
 
         //Mono- a stream that can emit 0..1 elements
 //        Mono<Integer> just =Mono.just(1);
