@@ -16,8 +16,8 @@ Add Dependencies
  
 Subscribe- Use the subscribe mthod to emmit the elements.
 Logging the sequence<br>
-    - onSubscribe() – This is called when we subscribe to our stream.<br>
-    2. request(unbounded) – When we call subscribe, behind the scenes we’re
+    1.  onSubscribe() – This is called when we subscribe to our stream.<br>
+    2.  request(unbounded) – When we call subscribe, behind the scenes we’re
     creating a Subscription.<br>
     3. onNext() – This is called on every single element.<br>
     4. onComplete() – This is called last, after receiving the last element. <br>
