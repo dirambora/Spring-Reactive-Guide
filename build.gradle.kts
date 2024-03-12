@@ -14,7 +14,8 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("io.projectreactor:reactor-core:3.6.0")
     testImplementation("ch.qos.logback:logback-classic:1.5.3")
-    testImplementation ("org.assertj:assertj-core:3.21.0") // Replace with the latest version
+    implementation("org.assertj:assertj-core:3.19.0") // Use the latest version available
+
 
 
 
