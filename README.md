@@ -175,14 +175,18 @@ It serves as an alternative to the @RequestMappping annotation.It can be used to
                  Mono<HandlerFunction<T>> route(ServerRequest request);
                  // ...
                 }
+Routes are registered as SPring beans, and can be created inside any configuration class.
 
 
 
 
+## SPRING 5 WEBCLIENT
+Webclient is an interface representing the main entry point for performing web requests.
 
-
-
-
+In order to work properly with the client we need to:
+  - create an instance
+  - make a request
+  - handle the response
 
 
 
