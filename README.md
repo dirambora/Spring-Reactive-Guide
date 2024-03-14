@@ -166,3 +166,29 @@ The HandlerFunction represents    a function that generates responses for reques
                        Mono<T> handle(ServerRequest request);
                       }
 Function<Request, Response<T>> behaves very much like a servlet.HandlerFunction does not take a reposnde as an input parameter.
+
+### Router Function
+It serves as an alternative to the @RequestMappping annotation.It can be used to route requests to the handler functions.
+
+                @FunctionalInterface
+                public interface RouterFunction<T extends ServerResponse> {
+                 Mono<HandlerFunction<T>> route(ServerRequest request);
+                 // ...
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
