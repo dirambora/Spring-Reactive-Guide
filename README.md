@@ -152,3 +152,17 @@ The new framework supports two programming models:
 
 
 
+## Introduction to the Functional Web Franework in Spring5
+-  Spring WebFlux is a new functional web framework built using reactive principles.
+The functiona; web framework introduces a new programming model whre we use functions to route and handdle requests.
+     HandlerFunction and RouterFunctions are used.
+
+### Handler Functions
+
+The HandlerFunction represents    a function that generates responses for requests route to them.
+
+                      @FunctionalInterface
+                      public interface HandlerFunction<T extends ServerResponse> {
+                       Mono<T> handle(ServerRequest request);
+                      }
+Function<Request, Response<T>> behaves very much like a servlet.HandlerFunction does not take a reposnde as an input parameter.
