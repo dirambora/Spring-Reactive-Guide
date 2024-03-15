@@ -188,11 +188,25 @@ In order to work properly with the client we need to:
   - make a request
   - handle the response
 
-
-
-
-
-
+Creating a Web Client Instance
+  -There are 3 options when creating a Webclient instance:
+   - Creating a webclient object with default settings
+    
+          WebClient client = WebClient.create();
+          
+   -Creating  a Webclient Instance with a Given URI
+    
+            WebClient client = WebClient.
+            create(“http://localhost:8080”);
+            
+   - building a client by using the DefaultWebClientBuilder class, which allows full customization: 
+    
+            WebClient client = WebClient.builder()
+           .baseUrl(“http://localhost:8080”)
+           .defaultCookie(“cookieKey”, “cookieValue”)
+           .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+           .defaultUriVariables(Collections.singletonMap(“url”, “http://localhost:8080”))
+           .build();
 
 
 
