@@ -189,6 +189,7 @@ In order to work properly with the client we need to:
   - handle the response
 
 Creating a Web Client Instance
+
   -There are 3 options when creating a Webclient instance:
    - Creating a webclient object with default settings
     
@@ -207,6 +208,31 @@ Creating a Web Client Instance
            .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
            .defaultUriVariables(Collections.singletonMap(“url”, “http://localhost:8080”))
            .build();
+
+
+### Creating a WebCliebt Instance with timeouts
+
+-Often, the default HTTP timeouts of 30 seconds are too slow for our needs. To customize this behavious,
+we can create a HttpClient and configure the webclient to use it.
+We can do that by:
+   - Setting the connection timout via e ChannelOption.CONNECT_TIMEOUT_MILLIS option
+   - Setting the read and write timeouts using a ReadTimeoutHandler and a WriteTimeoutHandler, respectively
+   - Configuring a response timeout using the responseTimeout directive
+
+               HttpClient httpClient = HttpClient.create()
+                   .option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
+                   .responseTimeout(Duration.ofMillis(5000))
+                   .doOnConnected(conn -> 
+                    conn.addHandlerLast(new ReadTimeoutHandler(5000, TimeUnit.
+                    MILLISECONDS))
+                  .addHandlerLast(new WriteTimeoutHandler(5000, TimeUnit.
+                   MILLISECONDS))) ;
+                   WebClient client = WebClient.builder()
+                   .clientConnector(new ReactorClientHttpConnector(httpClient))
+                   .build()
+
+
+
 
 
 
