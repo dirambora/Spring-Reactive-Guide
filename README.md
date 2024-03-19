@@ -262,11 +262,48 @@ As a jave .net URL instamce
            uri(URI.create("/resource"));
 
 
+### Preparing a Request- Define the Body
+
+We can set a request bofy by:
+1. Using the body value method
+
+       RequestHeadersSpec<?> headersSpec = 
+       bodySpec.bodyValue(“data”)
+
+2.by presenting a publisher to the body methpd
+
+       RequestHeadersSpec<?> headersSpec = bodySpec.body(
+       Mono.just(new Foo(“name”)), Foo.class);
+
+3. We can also make use of BodyInserterd utility class
+
+       RequestHeadersSpec<?> headersSpec = bodySpec.body(
+       BodyInserters.fromValue(“data”))
+   
+ 5. we can use the BodyInserters#fromPublisher method if we’re using a Reactor instance    
+
+        RequestHeadersSpec headersSpec = bodySpec.body(
+        BodyInserters.fromPublisher(Mono.just(“data”)),
+        String.class);
+
+This class also offers other intuitive functions to cover more advanced 
+scenarios. For instance, if we have to send multipart requests.
+
+        LinkedMultiValueMap map = new LinkedMultiValueMap();
+        map.add(“key1”, “value1”);
+        map.add(“key2”, “value2”);
+        RequestHea4.
+        dersSpec<?> headersSpec = bodySpec.body(
+        BodyInserters.fromMultipartData(map));
+
+
+- The BodyInserter is an interface responsible for populating a ReactiveHttpOutputMessage body with a given output message and a 
+context used during the insertion.
+- A Publisher is a reactive component in charge of providing a potentially unbounded number of sequenced elements. It’s an interface too, and the most popular implementations are Mono and Flux
+        
 
 
 
 
 
-
-            
-
+        
