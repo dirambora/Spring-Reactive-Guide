@@ -299,7 +299,9 @@ scenarios. For instance, if we have to send multipart requests.
 
 - The BodyInserter is an interface responsible for populating a ReactiveHttpOutputMessage body with a given output message and a 
 context used during the insertion.
-- A Publisher is a reactive component in charge of providing a potentially unbounded number of sequenced elements. It’s an interface too, and the most popular implementations are Mono and Flux
+- A Publisher is a reactive component in charge of providing a potentially unbounded number of sequenced elements. It’s an interface too, and the most popular implementations are Mono and Flux.
+
+  
         
 
 
