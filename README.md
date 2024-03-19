@@ -301,7 +301,118 @@ scenarios. For instance, if we have to send multipart requests.
 context used during the insertion.
 - A Publisher is a reactive component in charge of providing a potentially unbounded number of sequenced elements. It’s an interface too, and the most popular implementations are Mono and Flux.
 
-  
+### Preparing a Request- Define the Headers
+
+After setting the body, we can set the headers, cookies, and acceptable media types.There is an additional support for the most common;y used headers,like "If-None-Match", "If-Modified-Since", "Accept", and "Accept Charset"
+Here is an example of how they can be used:
+
+       HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+        .accept(MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML)
+        .acceptCharset(StandardCharsets.UTF_8)
+        .ifNoneMatch(“*”)
+        .ifModifiedSince(ZonedDateTime.now())
+        .retrieve();
+
+  ### Geeting a Response
+  The final stage is sending the request and receiving a response.We can use exchangeToMono/exchangeToFlux or the retrieve method.
+  The exchangeToMono and exchangeToFlux methods allow access to the ClientResponse, along with its status and headers:
+
+             Mono<String> response = headersSpec.exchangeToMono(response -> {
+             if (response.statusCode().equals(HttpStatus.OK)) {
+             return response.bodyToMono(String.class);
+             } else if (response.statusCode().is4xxClientError()) {
+             return Mono.just(“Error response”);
+             } else {
+             return response.createException()
+             .flatMap(Mono::error);
+             }
+            });
+
+   ## Working with the WebTestClient
+
+   The WebTestClient is the main entry point for testing WebFlux server endpoints.It delegatesmost of the work to an Internal 
+   Webclient instance focusing mainly on providing a test context.The DefaultWebTestClient xkass is a single interface 
+   implementation.
+   The client for testing can be bound to a real server, or work with specific controllers or functions.
+
+   ### Binding to a Server
+   To complete end-to-end intergration tests with actual requests to a running server, we can use the bindToServer method.
+
+               WebTestClient testClient = WebTestClient
+               .bindToServer()
+               .baseUrl(“http://localhost:8080”)
+               .build();
+
+   ### Binding to a Router
+
+   We test a RouterFunction by passing it to the bind the bindToRouterFunction method:
+
+              RouterFunction function = RouterFunctions.route(
+              RequestPredicates.GET(“/resource”),
+              request -> ServerResponse.ok().build()
+             );
+
+              WebTestClient
+             .bindToRouterFunction(function)
+             .build().get().uri(“/resource”)
+             .exchange()
+             .expectStatus().isOk()
+             .expectBody().isEmpty();
+
+
+   ### Binding to a Web Handler
+   The same behavior can be achieved with the bindToWebHandler method, which takes a WebHandler instance:
+
+            WebHandler handler = exchange -> Mono.empty();
+            WebTestClient.bindToWebHandler(handler).build();      
+         
+    
+   ### Binding to an Application Context
+   A more interesting situation occurs when we’re using the bindToApplicationContext method. It takes an ApplicationContext
+   and analyzes the context for controller beans and @EnableWebFlux configurations.
+   a simple code snippet may look like this:
+
+              @Autowired
+              private ApplicationContext context;
+              WebTestClient testClient = WebTestClient.
+              bindToApplicationContext(context)
+              .build()
+
+   ### Binding to a Controller
+   Another approach would be providing an array of controllers we want to test with the bindToController method.
+
+              @Autowired
+             private Controller controller;
+             WebTestClient testClient = WebTestClient.
+             bindToController(controller).build()
+   
+   ### Making a Request
+
+   
+       
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   
         
 
 
