@@ -232,7 +232,41 @@ We can do that by:
                    .build()
 
 
+### Preparing a Request- Define the Method
+- Specify a HTTP method of a request by invoking method(HttpMethod method);
+ 
+            UriSpec<RequestBodySpec> uriSpec = client.method(HttpMethod.POST);
+  
+-We can also call shortcut methods, such as get, post and delete
+           
+            UriSpec<RequestBodySpec> uriSpec = client.post()
+
+### Prepparing a Request- Define the URL
+Next Step is to provide a URL. There are fifferent ways of doing this:
+
+We can:
+pass it to the uri API as a string
+
+             RequestBodySpec bpodySpec = uriSpec.uri(*/resource*);
+             
+ Using a UriBuilder Function
+
+             RequestBodySpec bodySpec = uriSpec.
+             uri(
+             uriBuilder -> uriBuilder.
+             pathSegment(“/resource”).build());
+             
+As a jave .net URL instamce
+
+           Request BodySpec bodySpec = uriSpec
+           uri(URI.create("/resource"));
 
 
 
+
+
+
+
+
+            
 
