@@ -386,21 +386,23 @@ Here is an example of how they can be used:
              WebTestClient testClient = WebTestClient.
              bindToController(controller).build()
    
-   ### Making a Request
-
+  
 
    ## Concurency in Spring WebFlux
    ### The Motivation for Reactive Programming
 
   - A typical web application has many interactions that are blocking in nature such as those involving
-    a database call to fetch or update data.\
-  - For instance, two user requests to a web server can behandled by different threads. This model of 
-   concurrency is known as thread-per-request model
-  - While thread-based concurrency solves a part of the problem for us, it does nothing to adress the 
-    fact that most of the interactions are still blocking.
-         
-   
+    a database call to fetch or update data.\propagation of change through them.
+    In a completely non-blocking environment, this can enables us to acheive higher concurrency with
+    better resource utilization.
 
+   - Reactive programming certainly has a very different approach to the usage of threads to achieve 
+    concurrency. So the fundamental difference that reactive programming brings on is 
+    <b>asynchronicity<b>
+
+   - For instace,Under the reactive model, a read call to the database doesn’t block the calling thread 
+     while data is fetched. The call immediately returns a publisher that others can subscribe to. The 
+     subscriber can process the event after it occurs, and may even further generate events itself.
    
 
 
