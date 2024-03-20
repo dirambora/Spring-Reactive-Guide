@@ -404,7 +404,9 @@ Here is an example of how they can be used:
      while data is fetched. The call immediately returns a publisher that others can subscribe to. The 
      subscriber can process the event after it occurs, and may even further generate events itself.
    
-
+   ### Event Loop
+   One reactive asynchronous programming model for servers is the eventloop model:
+   
 
 
 
