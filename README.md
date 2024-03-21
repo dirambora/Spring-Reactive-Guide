@@ -405,14 +405,39 @@ Here is an example of how they can be used:
      subscriber can process the event after it occurs, and may even further generate events itself.
    
    ### Event Loop
-   One reactive asynchronous programming model for servers is the eventloop model:
+   One reactive asynchronous programming model for servers is the eventloop model
+
+   - The event loop runs continuously in a single thread, although we can 
+   have as many event loops as the number of available cores.
+   - The event loop processes the events from an event queue sequentially, 
+   and returns immediately after registering the callback with the platform.
+   - The platform can trigger the completion of an operation, like a database 
+   call or an external service invocation.
+   - The event loop can trigger the callback on the operation completion 
+   notification, and send back the result to the original caller
+
+   ### Reactive Programming with Spring WebFlux
+   WebFlux is Spring's reactive-stack web framework, which was added in version 5.0
+   Spring WebFlux sits parallel to the traditional web framework in Spring and doesn't replace it.
+
+   • Spring WebFlux extends the traditional annotation-based programming 
+   model with functional routing.
+   • It adapts the underlying HTTP runtimes to the Reactive Streams API, 
+   making the runtimes interoperable.
+   • It’s able to support a wide variety of reactive runtimes, including Servlet 
+   3.1+ containers, like Tomcat, Reactor, Netty, or Undertow.
+   • It includes WebClient, a reactive and non-blocking client for HTTP 
+   requests offering functional and fluent APIs.
+  - Spring WebFlux can adapt to different runtimes through a common API provided by HttpHandler
+  - While Netty is the default server in a WebFlux application, it’s just a matter 
+   of declaring the right dependency to switch to any other supported server
    
-
-
-
-   
-
-   
+   ### Reactor Netty
+   Reactor Netty is the default embedded server in the Spring Boot WebFlux starter.
+   Apart from a normal thread for the server, netty has a bunch of worker threads for request processing,
+   these are typically available CPU Cores.
+   Netty used the event loop model to provide highly scalableconcurrency in a reactive asynchronous 
+   manner.
        
 
 
