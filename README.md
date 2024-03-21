@@ -439,15 +439,36 @@ Here is an example of how they can be used:
    Netty used the event loop model to provide highly scalableconcurrency in a reactive asynchronous 
    manner.
        
+   ### Apache Tomcat
+   Spring WebFlux is also supported on a traditional Servlet Container, like Apache Tomcat.
+   WebFlux relies on the Servelet 3.1 API with non-blocking I/O. While it uses servelet API behind a 
+   low-level adapter.
 
+  - Tomcat 5 and onward supports NIO in its Connector component, which is primarily responsible for 
+    receiving the requests 
+  - The other Tomcat component is the Container component, which is responsible for the container 
+    management functions
 
-     
+    ### Threading Model in WebClient
+    WebClient is the reactive HTTP Client thats part of spring Webflux.
 
+    ### Using WebClient
+    Using WebClient is quite simple as well. We don’t need to include any specific dependencies, as it’s 
+    part of Spring WebFlux.
+    Here is a simple REST endpoint that returns a mono
+    
+              @GetMapping(“/index”)
+                public Mono<String> getIndex() {
+                 return Mono.just(“Hello World!”);
+                }
+               // we will use the webclient to call this RESR endpoint and consume the data reactively.
+               WebClient.create(“http://localhost:8080/index”).get()
+                .retrieve()
+                .bodyToMono(String.class)
+                .doOnNext(s -> printThreads());
 
-
-
-
-
+     ### Understanding the Threading Model
+    
 
 
 
