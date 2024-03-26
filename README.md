@@ -481,6 +481,9 @@ Here is an example of how they can be used:
     We’ll configure a Netty-based web server. Netty is an asynchronous NIO-based framework that’s a good foundation for reactive applications.
     The @EnableWebFlux annotation enables the standard Spring Web Reactive configuration for the application.
 
+
+    #### Spring Security Configuration Class
+
     For our basic Spring Security, configuration we'll create a configuration class SecurityConfig
     To enable WebFlux support in Spring Security 5, we only need to specify the @EnableWebFluxSecurity annotation.
     
@@ -489,18 +492,33 @@ Here is an example of how they can be used:
          // ...
         }
             
-    We can take advantage of the ServerHttpSecurity class to build our security configuration.This class is a new feature of Spring 5. It’s similar to HttpSecurity builder, 
+    We can take advantage of the ServerHttpSecurity class to build our security configuration.This class is a new feature of Spring 5. It’s similar to 
+    HttpSecurity builder, 
     but it’s only enabled for WebFlux applications
     
+   Also, we’ll need a user details service. Spring Security provides us with a convenient mock user builder and an in-memory implementation of the 
+   user details service
+   
+        @Bean
+        public MapReactiveUserDetailsService userDetailsService() {
+        UserDetails user = User
+        .withUsername(“user”)
+        .password(passwordEncoder().encode(“password”))
+        .roles(“USER”)
+        .build();
+        return new MapReactiveUserDetailsService(user);
+       }
+              
+   Reactive Controller Security
+   Reactive Method Security
+   - To enable method-based security for reactive methods, we only need to add the @EnableReactiveMethodSecurity to the SecurityConfig class.
 
-
-
-
-
-
-
-
-
+             @EnableWebFluxSecurity
+            @EnableReactiveMethodSecurity
+            public class SecurityConfig {
+             // ...
+            }
+   
 
    
         
