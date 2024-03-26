@@ -489,7 +489,9 @@ Here is an example of how they can be used:
          // ...
         }
             
-
+    We can take advantage of the ServerHttpSecurity class to build our security configuration.This class is a new feature of Spring 5. It’s similar to HttpSecurity builder, 
+    but it’s only enabled for WebFlux applications
+    
 
 
 
