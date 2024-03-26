@@ -472,6 +472,24 @@ Here is an example of how they can be used:
 
 
 
+    ### SPRING SECURITY 5 FOR REACTIVE APPLICATIONS
+
+    SETUP-The basic setup requires a parent declaration, web starter, and security starter dependencies. We’ll also need the Spring Security test framework:
+
+    #### Boostrapping the Reactive Application
+
+    We’ll configure a Netty-based web server. Netty is an asynchronous NIO-based framework that’s a good foundation for reactive applications.
+    The @EnableWebFlux annotation enables the standard Spring Web Reactive configuration for the application.
+
+    For our basic Spring Security, configuration we'll create a configuration class SecurityConfig
+    To enable WebFlux support in Spring Security 5, we only need to specify the @EnableWebFluxSecurity annotation.
+    
+        @EnableWebFluxSecurity
+        public class SecurityConfig {
+         // ...
+        }
+            
+
 
 
 
